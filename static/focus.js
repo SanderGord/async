@@ -13,11 +13,17 @@ async function run() {
     const analyticsPromise = sendRequest(`${API.analytics}?ogrn=${ogrns}`);
     const buhPromise = sendRequest(`${API.buhForms}?ogrn=${ogrns}`);
 
-    const [requisites, analytics, buh] = await Promise.all([requisitesPromise, analyticsPromise, buhPromise]);
-    const orgsMap = reqsToMap(requisites);
-    addInOrgsMap(orgsMap, analytics, 'analytics');
-    addInOrgsMap(orgsMap, buh, 'buhForms');
-    render(orgsMap, orgOgrns);
+    try {
+        const [requisites, analytics, buh] = await Promise.all([requisitesPromise, analyticsPromise, buhPromise]);
+
+        const orgsMap = reqsToMap(requisites);
+        addInOrgsMap(orgsMap, analytics, 'analytics');
+        addInOrgsMap(orgsMap, buh, 'buhForms');
+        render(orgsMap, orgOgrns);
+    } catch (error) {
+        console.log(error);
+    }
+    console.log('deasfrgtd');
 }
 
 run().catch(() => {}).finally(() => {});
