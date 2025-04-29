@@ -1,6 +1,6 @@
 const API = {
     organizationList: '/orgsList',
-    analytics: '/api3/analytics',
+    analytics: '/api3/analitics',
     orgReqs: '/api3/reqBase',
     buhForms: '/api3/buh',
 };
@@ -20,27 +20,18 @@ async function run() {
     render(orgsMap, orgOgrns);
 }
 
-run().finally(() => {});
+run().catch(() => {}).finally(() => {});
 
 function sendRequest(url) {
     return new Promise((resolve, reject) => {
-        /*
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.response));
-                } else {
-                    reject(new Error('плохо'));
-                }
+        fetch(url).then(response => {
+            if (!response.ok) {
+                alert(`oshibka: ${response.status}`);
+                reject(new Error(`oshibka: ${response.status}`));
+                return;
             }
-        };
-
-        xhr.send();
-        */
-        fetch(url).then(response => resolve(response.json()));
+            resolve(response.json());
+        });
     });
 }
 
