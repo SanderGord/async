@@ -24,6 +24,7 @@ run().finally(() => {});
 
 function sendRequest(url) {
     return new Promise((resolve, reject) => {
+        /*
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
 
@@ -38,6 +39,8 @@ function sendRequest(url) {
         };
 
         xhr.send();
+        */
+        fetch(url).then(response => resolve(response.json()));
     });
 }
 
